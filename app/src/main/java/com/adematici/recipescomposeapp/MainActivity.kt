@@ -5,33 +5,34 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import com.adematici.recipescomposeapp.ui.theme.RecipesComposeAppTheme
 import com.adematici.recipescomposeapp.view.FoodDetailScreen
 import com.adematici.recipescomposeapp.view.RecipesScreen
 
+@ExperimentalCoilApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RecipesComposeAppTheme {
-                RecipesScreen()
+                NavigationScreen()
             }
         }
     }
 }
 
+@ExperimentalCoilApi
 @Composable
-@Preview(showBackground = true)
-fun RecipesScreenPreview(){
-    RecipesComposeAppTheme {
-        RecipesScreen()
-    }
-}
+fun NavigationScreen(){
+    val navController = rememberNavController()
 
-@Composable
-@Preview(showBackground = true)
-fun FoodDetailScreenPreview(){
-    RecipesComposeAppTheme {
-        FoodDetailScreen()
+    NavHost(navController = navController, startDestination = "recipes_screen") {
+        composable("recipes_screen") { RecipesScreen(/*navController*/) }
+        composable("food_detail_screen") { FoodDetailScreen() }
     }
+
 }
