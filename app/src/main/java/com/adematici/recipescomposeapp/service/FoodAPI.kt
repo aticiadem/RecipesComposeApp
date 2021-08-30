@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 class FoodAPI {
 
-    private val api: FoodAPI
+    private val api: FoodApi
 
     init {
         val retrofit = Retrofit.Builder()
@@ -15,7 +15,7 @@ class FoodAPI {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        api = retrofit.create(FoodAPI::class.java)
+        api = retrofit.create(FoodApi::class.java)
     }
 
     suspend fun getRecipes(): List<FoodModel> {
