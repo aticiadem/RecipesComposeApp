@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class FoodModel(
     @SerializedName("isim")
-    val foodName: String?,
+    val foodName: String,
     @SerializedName("malzeme")
-    val foodIngredient: String?,
+    val foodIngredient: String,
     @SerializedName("yapilis")
-    val foodCook: String?,
+    val foodCook: String,
     @SerializedName("gorsel")
-    val foodImage: String?
+    val foodImage: String
 )

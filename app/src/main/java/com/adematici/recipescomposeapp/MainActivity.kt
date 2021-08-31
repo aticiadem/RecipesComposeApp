@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.adematici.recipescomposeapp.ui.theme.RecipesComposeAppTheme
@@ -27,12 +28,21 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalCoilApi
 @Composable
-fun NavigationScreen(){
+fun NavigationScreen() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "recipes_screen") {
-        composable("recipes_screen") { RecipesScreen(/*navController*/) }
-        composable("food_detail_screen") { FoodDetailScreen() }
+        composable("recipes_screen") { RecipesScreen(navController) }
+        composable(
+            "food_detail_screen/{name}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType }
+            )
+        ) { navStackBackStackEntry ->
+            FoodDetailScreen(
+                navStackBackStackEntry.arguments?.getString("name")!!
+            )
+        }
     }
 
 }
