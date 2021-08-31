@@ -40,7 +40,6 @@ fun NavigationScreen() {
             )
         ) { navStackBackStackEntry ->
             FoodDetailScreen(
-                navController = navController,
                 navStackBackStackEntry.arguments?.getString("name")!!
             )
         }
