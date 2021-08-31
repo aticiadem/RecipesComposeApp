@@ -2,6 +2,7 @@ package com.adematici.recipescomposeapp.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,10 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
@@ -24,16 +25,21 @@ import com.adematici.recipescomposeapp.viewmodel.FoodViewModel
 
 @ExperimentalCoilApi
 @Composable
-fun RecipesScreen(/*navController: NavController*/) {
+fun RecipesScreen(navController: NavController) {
     val viewModel: FoodViewModel = viewModel()
     val recipes = viewModel.recipesState.value
     Scaffold(
         topBar = { AppBarTop("Recipes") }
     ) {
         Surface {
-            LazyColumn{
-                items(recipes){ recipe ->
-                    RecipeCard(imageUrl = recipe.foodImage!!, foodName = recipe.foodName!!)
+            LazyColumn {
+                items(recipes) { recipe ->
+                    RecipeCard(
+                        imageUrl = recipe.foodImage,
+                        foodName = recipe.foodName
+                    ) {
+                        navController.navigate("food_detail_screen/${recipe.foodName}")
+                    }
                 }
             }
         }
@@ -56,12 +62,13 @@ fun AppBarTop(title: String) {
 
 @ExperimentalCoilApi
 @Composable
-fun RecipeCard(imageUrl: String, foodName: String) {
+fun RecipeCard(imageUrl: String, foodName: String, clickAction: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .height(140.dp),
+            .height(140.dp)
+            .clickable { clickAction.invoke() },
         elevation = 8.dp,
         shape = RoundedCornerShape(20.dp),
         backgroundColor = LightGray200,
@@ -105,11 +112,4 @@ fun CoilImage(imageUrl: String) {
     if (painterState is ImagePainter.State.Loading) {
         CircularProgressIndicator()
     }
-}
-
-@ExperimentalCoilApi
-@Composable
-@Preview(showBackground = true)
-fun RecipesScreenPreview() {
-    RecipesScreen()
 }
