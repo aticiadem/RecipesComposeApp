@@ -21,7 +21,7 @@ Libraries Used
 App GIF
 --------------
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/58858983/131631638-59a63518-b130-47ae-acbd-16b5bb8f57b8.gif" alt="GIF" />
+  <img src="https://user-images.githubusercontent.com/58858983/131632949-7e96e740-77b2-4e5a-89ea-002c8519baf1.gif" alt="GIF" />
 </p>
 
 
